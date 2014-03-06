@@ -1,3 +1,5 @@
+require 'active_support/concern'
+
 module TokenVerification
 
   class ExpiredToken < StandardError; end
@@ -5,7 +7,7 @@ module TokenVerification
   PASSWORD_RESET = 'password_reset'
   EMAIL_CONFIRMATION = 'email_confirmation'
 
-  extend ActiveSupport::Base
+  extend ActiveSupport::Concern
 
   def password_reset_token
     verifier = self.class.verifier_for(PASSWORD_RESET)

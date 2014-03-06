@@ -1,4 +1,6 @@
-module ControllerAuthentication
+require 'active_support/concern'
+
+module Authentication
 
   extend ActiveSupport::Concern
 

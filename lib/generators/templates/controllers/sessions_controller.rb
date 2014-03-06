@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    identity = <%= domain_model.classify %>.find_by(email: params.require(:email))
+    identity = <%= identity_model.classify %>.find_by(email: params.require(:email))
     if identity && identity.authenticate(params.require(:password))
       session[:<%= "#{domain_model.underscore}_id" %>] = identity.<%= "#{domain_model.underscore}_id" %>
       redirect_to after_sign_in_path, alert: "Successfully logged in"

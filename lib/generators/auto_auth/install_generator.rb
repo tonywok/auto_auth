@@ -37,10 +37,6 @@ module AutoAuth
       template "controllers/passwords_controller.rb", "app/controllers/passwords_controller.rb"
     end
 
-    def create_lib_files
-      template "lib/controller_authentication.rb", "lib/controller_authentication.rb"
-    end
-
     def create_mailer_files
       template "mailers/identity_notifier.rb", "lib/#{identity_model}_notifier.rb"
     end
@@ -57,7 +53,12 @@ module AutoAuth
     end
 
     def include_authentication
-      inject_into_class "app/controllers/application_controller.rb", "ApplicationController", "  include ControllerAuthentication\n"
+      template "controllers/concerns/authentication.rb", "app/controllers/concerns/authentication.rb"
+      inject_into_class "app/controllers/application_controller.rb", "ApplicationController", "  include Authentication\n"
+    end
+
+    def create_view_files
+      template "views/sessions/new.html.erb", "app/views/sessions/new.html.erb"
     end
 
 

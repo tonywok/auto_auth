@@ -15,7 +15,7 @@ class Create<%= domain_model_class %>And<%= identity_model_class %> < ActiveReco
       t.timestamps
     end
 
-    add_index :credentials, :email, unique: true
-    add_index :credentials, :<%= domain_model_id %>
+    add_index :<%= plural_identity_model %>, :email, unique: true
+    add_index :<%= plural_identity_model %>, :<%= domain_model_id %>
   end
 end
