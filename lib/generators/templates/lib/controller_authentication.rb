@@ -13,7 +13,7 @@ module ControllerAuthentication
   end
 
   def signed_in?
-    !!current_user
+    !!current_<%= domain_model %>
   end
 
   def authenticate!

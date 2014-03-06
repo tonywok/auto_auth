@@ -27,23 +27,29 @@ module AutoAuth
     end
 
     def create_model_files
-      template "domain_model.rb", "app/models/#{domain_model}.rb"
-      template "identity_model.rb", "app/models/#{identity_model}.rb"
+      template "models/domain_model.rb", "app/models/#{domain_model}.rb"
+      template "models/identity_model.rb", "app/models/#{identity_model}.rb"
+      template "models/concerns/token_verification.rb", "app/models/concerns/token_verification.rb"
     end
 
     def create_controller_files
-      template "sessions_controller.rb", "app/controllers/sessions_controller.rb"
-      template "passwords_controller.rb", "app/controllers/sessions_controller.rb"
+      template "controllers/sessions_controller.rb", "app/controllers/sessions_controller.rb"
+      template "controllers/passwords_controller.rb", "app/controllers/passwords_controller.rb"
     end
 
     def create_lib_files
-      template "controller_authentication.rb", "lib/controller_authentication.rb"
+      template "lib/controller_authentication.rb", "lib/controller_authentication.rb"
+    end
+
+    def create_mailer_files
+      template "mailers/identity_notifier.rb", "lib/#{identity_model}_notifier.rb"
     end
 
     def create_routes
       route "resources :sessions, only: [:create]"
       route "get :sign_in, to: 'sessions#new'"
       route "get :sign_out, to: 'sessions#destroy'"
+      route "resources :passwords, only: [:create, :show, :update]"
     end
 
     def create_migration_files

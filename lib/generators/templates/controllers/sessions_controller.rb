@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
 
-  skip_before_filter :authenticate, only: :new
+  skip_before_filter :authenticate!, only: :new
 
   def new
     redirect_to after_login_path, alert: "You're already logged in" if signed_in?
