@@ -1,7 +1,12 @@
 require 'test_helper'
 
-class AutoAuthTest < ActiveSupport::TestCase
+class AutoAuthTest < Rails::Generators::TestCase
+  tests AutoAuth::InstallGenerator
+  destination File.expand_path("../tmp", __FILE__)
+  setup :prepare_destination
+
   test "truth" do
-    assert_kind_of Module, AutoAuth
+    run_generator ['--dev']
+    assert_file "app/models/user.rb"
   end
 end
