@@ -1,24 +1,25 @@
 class SessionsController < ApplicationController
 
-  skip_before_filter :authenticate!, only: :new
+  skip_before_action :authenticate!, only: :new
+  before_action :redirect_authenticated, only: [:new]
 
   def new
-    redirect_to after_login_path, alert: "You're already logged in" if signed_in?
   end
 
   def create
-    identity = <%= identity_model.classify %>.find_by(email: params.require(:email))
-    if identity && identity.authenticate(params.require(:password))
+    identity = <%= identity_model.classify %>.find_by(email: params[:session][:email])
+    if identity && identity.authenticate(params[:session].delete(:password))
       session[:<%= "#{domain_model.underscore}_id" %>] = identity.<%= "#{domain_model.underscore}_id" %>
-      redirect_to after_sign_in_path, alert: "Successfully logged in"
+      redirect_to(after_sign_in_path, notice: t(:'auto_auth.sessions.signed_in'))
     else
-      redirect_to sign_in_path, alert: "Incorrect email/password"
+      flash.now[:alert] = t(:'auto_auth.sessions.bad_combination')
+      render :new
     end
   end
 
   def destroy
     reset_session
-    redirect_to sign_in_path, alert: "Successfully signed out"
+    redirect_to(sign_in_path, alert: t(:'auto_auth.sessions.signed_out'))
   end
 
 

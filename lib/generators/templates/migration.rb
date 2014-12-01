@@ -1,8 +1,7 @@
 class Create<%= domain_model_class %>And<%= identity_model_class %> < ActiveRecord::Migration
   def change
     create_table(:<%= plural_domain_model %>) do |t|
-      t.string :first_name
-      t.string :last_name
+      t.string :name
 
       t.timestamps
     end
@@ -10,6 +9,7 @@ class Create<%= domain_model_class %>And<%= identity_model_class %> < ActiveReco
     create_table(:<%= plural_identity_model %>) do |t|
       t.string :email
       t.string :password_digest, null: false, default: ""
+      t.datetime :confirmed_at
       t.references :<%= domain_model %>
 
       t.timestamps

@@ -1,0 +1,24 @@
+auto_auth:
+
+  mailers:
+    reset_password:
+      subject: "Reset your password"
+    confirm_email:
+      subject: "Confirm your email"
+
+  application:
+    invalid_signature: "The token you've provided is invalid."
+  sessions:
+    existing: "You're already signed in"
+    required: "You must be signed in to perform that action"
+    signed_in: "Successfully signed in"
+    signed_out: "You've been signed out"
+    bad_combination: "Bad combination of email and password"
+  passwords:
+    reset_instructions: "Check your email for password reset instructions"
+    reset: "Password successfully updated"
+    expired: "Your password reset link has expired"
+  registrations:
+    account_created: "You've succuessfully registered"
+    confirmed: "You've successfully confirmed your account"
+    expired: "Your email confirmation link has expired"

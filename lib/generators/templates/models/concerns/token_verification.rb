@@ -4,13 +4,11 @@ module TokenVerification
 
   class ExpiredToken < StandardError; end
 
-  PASSWORD_RESET = 'password_reset'
-
   extend ActiveSupport::Concern
 
-  def password_reset_token
-    verifier = self.class.verifier_for(PASSWORD_RESET)
-    verifier.generate([id, Time.now])
+  def expiration_token(expires_at, purpose)
+    verifier = self.class.verifier_for(purpose)
+    verifier.generate({ id: id, expires_at: expires_at })
   end
 
 
@@ -23,10 +21,14 @@ module TokenVerification
       end
     end
 
-    def find_by_password_reset_token!(token)
-      <%= domain_model_id %>, timestamp = self.class.verifier_for(PASSWORD_RESET).verify(token)
-      raise ::TokenVerification::ExpiredToken if timestamp < 1.day.ago
-      <%= identity_model_class %>.find(<%= domain_model_id %>)
+    def verify_signature!(purpose, token)
+      data = self.verifier_for(purpose).verify(token)
+      record = self.find(data[:id])
+      record.tap do
+        if block_given?
+          yield(record, data[:expires_at])
+        end
+      end
     end
 
   end

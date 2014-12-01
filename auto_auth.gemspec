@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = AutoAuth::VERSION
   spec.authors       = ["Tony Schneider"]
   spec.email         = ["tonywok@gmail.com"]
-  spec.summary       = %q{Simple authentication ready to be customized.}
+  spec.summary       = %q{Simple authentication templates ready to be customized.}
   spec.homepage      = "https://github.com/tonywok/auto_auth"
   spec.license       = "MIT"
 
@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "rails", "~> 4.0.3"
+  spec.add_dependency "rails", "~> 4.1.8"
   spec.add_development_dependency "bundler", "~> 1.5"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "sqlite3"

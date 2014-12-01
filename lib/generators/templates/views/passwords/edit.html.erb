@@ -1,0 +1,14 @@
+<%%= form_for(@<%= identity_model %>, url: password_path) do |f| %>
+  <%%= hidden_field_tag(:password_reset_token, params[:password_reset_token])
+
+  <p>
+    <%%= f.label :password %>
+    <%%= f.text_field :password %>
+  </p>
+  <p>
+    <%%= f.label :password_confirmation %>
+    <%%= f.text_field :password_confirmation %>
+  </p>
+
+  <%%= f.submit "Change Password" %>
+<%% end %>

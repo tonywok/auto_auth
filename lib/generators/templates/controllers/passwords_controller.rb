@@ -1,21 +1,47 @@
 class PasswordsController < ApplicationController
 
-  def create
-    <%= identity_model %> = <%= identity_model_class %>.find_by(email: params.require(:email))
-    <%= identity_model_class %>Notifier.reset_password(<%= identity_model %>).deliver
-    redirect_to root_url, notice: "Check your email for password reset instructions"
+  respond_to :html
+
+  skip_before_action :authenticate!
+  before_action :setup_<%= identity_model %>, only: [:edit, :update]
+
+  def new
   end
 
-  def show
-    @<%= identity_model %> = <%= identity_model_class %>.find_by_password_reset_token!(params.require(:token))
+  def edit
+  end
+
+  def create
+    email = params[:<%= identity_model %>][:email]
+    if <%= identity_model %> = <%= identity_model_class %>.find_by(email: email)
+      <%= identity_mailer_class %>.reset_password(<%= identity_model %>).deliver
+    end
+    redirect_to(root_path, notice: t(:'auth_auth.passwords.reset_instructions'))
   end
 
   def update
-    <%= identity_model_class %>.find_by_password_reset_token!(params.require(:token)).update!(
-      password: params.require(:new_password),
-      password_confirmation: params.require(:new_password_confirmation)
-    )
-    redirect_to root_url, notice: "Your password has been reset"
+    if @<%= identity_model %>.update!(password_params)
+      redirect_to(root_path, notice: t(:'auto_auth.passwords.reset'))
+    else
+      render :edit
+    end
+  end
+
+
+  private
+
+  def setup_<%= identity_model %>
+    <%= identity_model_class %>.verify_signature!(TokenVerification::PASSWORD_RESET, params.require(:password_reset_token)) do |record, expires_at|
+      if expires_at < Time.current
+        redirect_to(root_path, alert: t(:"auto_auth.passwords.expired")) and return
+      else
+        @<%= identity_model %> = record
+      end
+    end
+  end
+
+  def password_params
+    params.require(:<%= identity_model %>).permit(:password, :password_confirmation)
   end
 
 end
