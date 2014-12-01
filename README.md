@@ -1,24 +1,52 @@
 # AutoAuth
 
-TODO: Write a gem description
+A simple and sane rails authentication generator.
+
+Generates roughly the following:
+```
+app/
+    models/
+        concerns/
+            token_verification.rb
+        user.rb
+        identity.rb
+        registration.rb
+    controllers/
+        concerns/
+            authentication.rb
+        sessions_controller.rb
+        registrations_controller.rb
+        passwords_controller.rb
+    mailers
+        identity_mailer.rb
+    views
+        passwords/
+            edit.html.erb
+            new.html.erb
+        sessions/
+            new.html.erb
+        registrations/
+            new.html.erb
+        identity_mailer/
+            confirm_email.html.erb
+            reset_password.html.erb
+      config/
+          locales/
+              auto_auth.en.yml
+
+```
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'auto_auth'
+I wouldn't add this to my gemfile, since it's really only meant to be run once. Instead, do `gem install auto_auth`
 
 And then execute:
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install auto_auth
+    $ rails generate auto_auth:install
 
 ## Usage
 
-TODO: Write usage instructions here
+By default I have my domain model named `User` and my identity model named `Identity`. You can customize this by passing `--domain_model` and `--identity_model` to the rails generator.
 
 ## Contributing
 
