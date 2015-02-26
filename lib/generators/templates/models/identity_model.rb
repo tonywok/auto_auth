@@ -17,7 +17,7 @@ class <%= identity_model_class %> < ActiveRecord::Base
   validates_confirmation_of :password, if: :password_required?
   validates_length_of :password, within: 8..128, allow_blank: true
 
-  before_save :downcase_email, -> { |ident| ident.email.downcase! }
+  before_save { |ident| ident.email.downcase! }
 
   def update_email(new_email)
     self.email = new_email
