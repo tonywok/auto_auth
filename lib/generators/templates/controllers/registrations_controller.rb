@@ -30,7 +30,7 @@ class RegistrationsController < ApplicationController
   private
 
   def setup_<%= identity_model %>
-    <%= identity_model_class %>.verify_signature!(TokenVerification::EMAIL_CONFIRMATION, params.require(:email_confirmation_token)) do |record, expires_at|
+    <%= identity_model_class %>.verify_signature!(Identity::EMAIL_CONFIRMATION_KEY, params.require(:email_confirmation_token)) do |record, expires_at|
       if expires_at < Time.current
         redirect_to(root_path, alert: t(:'auto_auth.registrations.expired'))
       else
