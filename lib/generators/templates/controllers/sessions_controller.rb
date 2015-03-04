@@ -7,9 +7,9 @@ class SessionsController < ApplicationController
   end
 
   def create
-    identity = <%= identity_model.classify %>.find_by(email: params[:session][:email])
-    if identity && identity.authenticate(params[:session].delete(:password))
-      session[:<%= "#{domain_model.underscore}_id" %>] = identity.<%= "#{domain_model.underscore}_id" %>
+    <%= identity_model %> = <%= identity_model.classify %>.find_by(email: params[:session][:email])
+    if <%= identity_model %> && <%= identity_model %>.authenticate(params[:session].delete(:password))
+      session[:<%= "#{domain_model.underscore}_id" %>] = <%= identity_model %>.<%= "#{domain_model.underscore}_id" %>
       redirect_to(after_sign_in_path, notice: t(:'auto_auth.sessions.signed_in'))
     else
       flash.now[:alert] = t(:'auto_auth.sessions.bad_combination')
