@@ -9,7 +9,7 @@ module Authentication
   end
 
   def sign_in!(<%= domain_model %>)
-    session[:user_id] = user.id
+    session[:<%= domain_model %>_id] = <%= domain_model %>.id
   end
 
   def current_<%= domain_model %>
