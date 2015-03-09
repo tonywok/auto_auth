@@ -24,6 +24,7 @@ module AutoAuth
 
     def add_gems
       gem "bcrypt"
+      gem "responders"
     end
 
     def create_model_files
