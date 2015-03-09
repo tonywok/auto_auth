@@ -12,7 +12,7 @@ class RegistrationsController < ApplicationController
 
   def confirm
     @<%= identity_model %>.confirm!
-    redirect_to(root_path, notice: t(:'auto_auth.registration.confirmed'))
+    redirect_to(root_path, notice: t(:'auto_auth.registrations.confirmed'))
   end
 
   def create

@@ -16,7 +16,7 @@ class PasswordsController < ApplicationController
     if <%= identity_model %> = <%= identity_model_class %>.find_by(email: email)
       <%= identity_mailer_class %>.reset_password(<%= identity_model %>).deliver
     end
-    redirect_to(root_path, notice: t(:'auth_auth.passwords.reset_instructions'))
+    redirect_to(root_path, notice: t(:'auto_auth.passwords.reset_instructions'))
   end
 
   def update
