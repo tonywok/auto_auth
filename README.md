@@ -1,3 +1,5 @@
+# :warning: **This repository is no longer maintained**
+
 # AutoAuth
 
 A simple and sane rails authentication generator.
